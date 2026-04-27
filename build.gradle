@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '4.0.6'
     id 'io.spring.dependency-management' version '1.1.7'
+    id 'org.sonarqube' version '7.2.3.7755'
 }
 
 group = 'ch.guessbb'
@@ -28,6 +29,13 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
     testImplementation 'org.springframework.boot:spring-boot-starter-websocket-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+sonar {
+    properties {
+        property 'sonar.projectKey', 'ClaudeStark_sopra-server'
+        property 'sonar.organization', 'claudestark'
+    }
 }
 
 tasks.named('test') {
