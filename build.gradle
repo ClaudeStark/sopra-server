@@ -3,6 +3,7 @@ plugins {
     id 'org.springframework.boot' version '4.0.6'
     id 'io.spring.dependency-management' version '1.1.7'
     id 'org.sonarqube' version '7.2.3.7755'
+    id 'jacoco'
 }
 
 group = 'ch.guessbb'
@@ -15,29 +16,85 @@ java {
     }
 }
 
+configurations {
+    developmentOnly
+    runtimeClasspath {
+        extendsFrom developmentOnly
+    }
+}
+
 repositories {
     mavenCentral()
 }
 
 dependencies {
+    // Lombok
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
+    implementation 'org.mapstruct:mapstruct:1.5.5.Final'
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
+    testAnnotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
+
+    // Spring Boot
     implementation 'org.springframework.boot:spring-boot-h2console'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-webmvc'
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
+    implementation 'org.springframework.boot:spring-boot-starter-json'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-cache'
+    implementation 'com.fasterxml.jackson.core:jackson-databind'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+    // GTFS & Transport
+    implementation 'io.projectreactor.netty:reactor-netty'
+    implementation 'com.google.transit:gtfs-realtime-bindings:0.0.4'
+    implementation 'org.mobilitydata:gtfs-realtime-bindings:0.0.8'
+    implementation 'com.opencsv:opencsv:5.9'
+
+    // Database
     runtimeOnly 'com.h2database:h2'
+
+    // Test
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.boot:spring-boot-starter-data-jpa-test'
     testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
     testImplementation 'org.springframework.boot:spring-boot-starter-websocket-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
+bootJar {
+    archiveFileName = "${archiveBaseName.get()}.${archiveExtension.get()}"
+}
+
 sonar {
     properties {
         property 'sonar.projectKey', 'ClaudeStark_sopra-server'
         property 'sonar.organization', 'claudestark'
+        property 'sonar.host.url', 'https://sonarcloud.io'
     }
 }
 
-tasks.named('test') {
-    useJUnitPlatform()
+jacocoTestReport {
+    reports {
+        xml.required = true
+    }
 }
+
+test {
+    useJUnitPlatform()
+    testLogging.showStandardStreams = true
+    maxParallelForks = 1
+}
+
+File secretPropsFile = file('./local.properties')
+if (secretPropsFile.exists()) {
+    Properties p = new Properties()
+    p.load(new FileInputStream(secretPropsFile))
+    p.each { name, value ->
+        ext[name] = value
+    }
+}
+
+defaultTasks 'bootJar', 'build'

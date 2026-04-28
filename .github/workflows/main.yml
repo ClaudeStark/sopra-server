@@ -38,8 +38,34 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: ./gradlew build sonar --info
 
-  build-and-push:
+  release:
+    if: github.event_name == 'push'
+    name: Semantic Release
+    runs-on: ubuntu-latest
     needs: sonar
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+    steps:
+      - name: Checkout repository code (full history for tags)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup Node 18
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: npm
+      - name: Install release deps
+        run: npm ci
+      - name: Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npm run release
+
+  build-and-push:
+    needs: [sonar, release]
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
