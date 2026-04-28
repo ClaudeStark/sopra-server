@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/ClaudeStark/sopra-server/compare/v1.0.0...v1.0.1) (2026-04-28)
+
+
+### Bug Fixes
+
+* distribute workflows ([0d4c9a5](https://github.com/ClaudeStark/sopra-server/commit/0d4c9a5d6bf930a0d20ea6bfd495206bc7f128c9))
+
 # 1.0.0 (2026-04-28)
 
 
