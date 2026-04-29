@@ -1,3 +1,10 @@
+## [1.1.2](https://github.com/ClaudeStark/sopra-server/compare/v1.1.1...v1.1.2) (2026-04-29)
+
+
+### Bug Fixes
+
+* change allowedOrigins ([cefa104](https://github.com/ClaudeStark/sopra-server/commit/cefa104ff3266b86895ccad1acabfe2aebdbc195))
+
 ## [1.1.1](https://github.com/ClaudeStark/sopra-server/compare/v1.1.0...v1.1.1) (2026-04-29)
 
 
