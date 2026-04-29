@@ -57,7 +57,7 @@ public class User implements Serializable {
 	private UserStatus status;
 
 	// @Column for friends was replaced by manyToMany table below
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "friends", joinColumns = @JoinColumn(name = "userId"), inverseJoinColumns = @JoinColumn(name = "friendId"))
 
 	private List<User> friends = new ArrayList<>();
