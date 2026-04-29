@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/ClaudeStark/sopra-server/compare/v1.0.1...v1.0.2) (2026-04-28)
+
+
+### Bug Fixes
+
+* manage workflow triggers ([9dd743f](https://github.com/ClaudeStark/sopra-server/commit/9dd743f939c1eded0a8207e3d84851cbdc3841d7))
+
 ## [1.0.1](https://github.com/ClaudeStark/sopra-server/compare/v1.0.0...v1.0.1) (2026-04-28)
 
 
