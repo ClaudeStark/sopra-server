@@ -1,0 +1,67 @@
+package ch.guessbb.sopraserver.rest.dto;
+
+import ch.guessbb.sopraserver.constant.LobbyState;
+import ch.guessbb.sopraserver.constant.LobbyVisibility;
+import ch.guessbb.sopraserver.objects.Admin;
+import ch.guessbb.sopraserver.objects.Score;
+
+import java.util.List;
+
+public class MyLobbyDTO {
+    private Long lobbyId;
+
+    private String lobbyName;
+
+    private String lobbyCode;
+
+    private Admin admin;
+
+    private Integer size;
+
+    private LobbyVisibility visibility;
+
+    private List<UserDTO> users;
+
+    private Integer currentRound;
+
+    private Integer maxRounds;
+
+    private List<Score> scores;
+
+    private LobbyState lobbyState;
+
+
+    public Long getLobbyId() {return lobbyId;}
+    public void setLobbyId(Long lobbyId) {this.lobbyId = lobbyId;}
+
+    public String getLobbyName() {return lobbyName;}
+    public void setLobbyName(String lobbyName) {this.lobbyName = lobbyName;}
+
+    public String getLobbyCode() {return lobbyCode;}
+    public void setLobbyCode(String lobbyCode) {this.lobbyCode = lobbyCode;}
+
+    public Admin getAdmin() {return admin;}
+    public void setAdmin(Admin admin) {this.admin = admin;}
+
+    public Integer getSize() {return size;}
+    public void setSize(Integer size) {this.size = size;}
+
+    public LobbyVisibility getVisibility() {return visibility;}
+    public void setVisibility(LobbyVisibility visibility) {this.visibility = visibility;}
+
+    public List<UserDTO> getUsers() {return users;}
+    public void setUsers(List<UserDTO> users) {this.users = users;}
+
+    public Integer getCurrentRound() {return currentRound;}
+    public void setCurrentRound(Integer currentRound) {this.currentRound = currentRound;}
+
+    public Integer getMaxRounds() {return maxRounds;}
+    public void setMaxRounds(Integer maxRounds) {this.maxRounds = maxRounds;}
+
+    public List<Score> getScores() {return scores;}
+    public void setScores(List<Score> scores) {this.scores = scores;}
+
+    public LobbyState getLobbyState() {return lobbyState;}
+    public void setLobbyState(LobbyState lobbyState) {this.lobbyState = lobbyState;}
+
+}
