@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/ClaudeStark/sopra-server/compare/v1.1.2...v1.2.0) (2026-04-29)
+
+
+### Features
+
+* change to real API ([93adaca](https://github.com/ClaudeStark/sopra-server/commit/93adaca6c03ff7afa2c0d762c3741fdf56977833))
+
 ## [1.1.2](https://github.com/ClaudeStark/sopra-server/compare/v1.1.1...v1.1.2) (2026-04-29)
 
 
