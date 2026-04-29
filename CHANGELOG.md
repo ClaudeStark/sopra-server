@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/ClaudeStark/sopra-server/compare/v1.1.0...v1.1.1) (2026-04-29)
+
+
+### Bug Fixes
+
+* lazy loading friendslist to eagerloading and CORS webconfig ([a556d5c](https://github.com/ClaudeStark/sopra-server/commit/a556d5cd2644c306a92f7a44cc4b1acd60c0f890))
+
 # [1.1.0](https://github.com/ClaudeStark/sopra-server/compare/v1.0.2...v1.1.0) (2026-04-29)
 
 
