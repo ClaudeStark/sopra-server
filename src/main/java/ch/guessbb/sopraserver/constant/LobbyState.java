@@ -1,8 +1,8 @@
 package ch.guessbb.sopraserver.constant;
 
 public enum LobbyState {
-    WAITING,
-    IN_GAME,
-    FINISHING;
-
+    WAITING,    // Warteraum
+    IN_GAME,    // Spiel läuft
+    FINISHING,  // Scoreboard wird angezeigt
+    FINISHED;   // Spiel komplett vorbei
 }
