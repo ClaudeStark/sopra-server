@@ -43,7 +43,7 @@ public class Lobby {
     @Column(nullable = false, length = 50)
     private LobbyState lobbyState;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "lobbyPlayer",
             joinColumns = @JoinColumn(name = "idLobby"),
