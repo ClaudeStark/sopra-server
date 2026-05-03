@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/ClaudeStark/sopra-server/compare/v1.2.0...v1.3.0) (2026-05-03)
+
+
+### Features
+
+* migrate to DB-backed architecture with RabbitMQ ([a0245cd](https://github.com/ClaudeStark/sopra-server/commit/a0245cd101c71be25df9c561c2b5ed964f5af7da))
+
 # [1.2.0](https://github.com/ClaudeStark/sopra-server/compare/v1.1.2...v1.2.0) (2026-04-29)
 
 
