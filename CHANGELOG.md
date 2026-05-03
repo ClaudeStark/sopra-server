@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/ClaudeStark/sopra-server/compare/v1.3.0...v1.3.1) (2026-05-03)
+
+
+### Bug Fixes
+
+* set system login credentials for RabbitMQ relay ([f4058f5](https://github.com/ClaudeStark/sopra-server/commit/f4058f5fac5572aaad225fa5bcfb69b9edab6338))
+
 # [1.3.0](https://github.com/ClaudeStark/sopra-server/compare/v1.2.0...v1.3.0) (2026-05-03)
 
 
