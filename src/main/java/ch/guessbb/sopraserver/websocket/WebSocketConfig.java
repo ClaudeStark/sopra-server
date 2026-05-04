@@ -41,15 +41,15 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
-    //    registry.enableStompBrokerRelay("/topic")
-      //          .setRelayHost(rabbitmqHost)
-        //        .setRelayPort(61613)
-          //      .setClientLogin(rabbitmqUser)
-            //    .setClientPasscode(rabbitmqPass)
-              //  .setSystemLogin(rabbitmqUser)
-                //.setSystemPasscode(rabbitmqPass)
-                //.setVirtualHost("/");
-        registry.enableSimpleBroker("/topic");
+        registry.enableStompBrokerRelay("/topic")
+                .setRelayHost(rabbitmqHost)
+                .setRelayPort(61613)
+                .setClientLogin(rabbitmqUser)
+                .setClientPasscode(rabbitmqPass)
+                .setSystemLogin(rabbitmqUser)
+                .setSystemPasscode(rabbitmqPass)
+                .setVirtualHost("/");
+        // registry.enableSimpleBroker("/topic");
         registry.setApplicationDestinationPrefixes("/app");
     }
 
