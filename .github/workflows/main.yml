@@ -128,8 +128,8 @@ jobs:
             docker stop sopra-server || true
             docker rm sopra-server || true
             docker run -d --name sopra-server --restart always -p 8081:8080 \
-              -e GEOPS_API_KEY=${{ secrets.GEOPS_API_KEY }} \
-              -e RABBITMQ_HOST=${{ secrets.RABBITMQ_HOST }} \
-              -e RABBITMQ_USER=${{ secrets.RABBITMQ_USER }} \
-              -e RABBITMQ_PASS=${{ secrets.RABBITMQ_PASS }} \
-              ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPO_NAME }}:latest
+            -e GEOPS_API_KEY=${{ secrets.GEOPS_API_KEY }} \
+            -e BROKER_HOST=${{ secrets.BROKER_HOST }} \
+            -e BROKER_USER=${{ secrets.BROKER_USER }} \
+            -e BROKER_PASS=${{ secrets.BROKER_PASS }} \
+            ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPO_NAME }}:latest

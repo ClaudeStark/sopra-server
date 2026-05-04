@@ -15,14 +15,14 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     private final WebSocketAuthInterceptor webSocketAuthInterceptor;
 
-    @Value("${rabbitmq.host}")
-    private String rabbitmqHost;
+    @Value("${broker.host}")
+    private String brokerHost;
 
-    @Value("${rabbitmq.user}")
-    private String rabbitmqUser;
+    @Value("${broker.user}")
+    private String brokerUser;
 
-    @Value("${rabbitmq.pass}")
-    private String rabbitmqPass;
+    @Value("${broker.pass}")
+    private String brokerPass;
 
 
     @Autowired
@@ -42,12 +42,12 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
         registry.enableStompBrokerRelay("/topic")
-                .setRelayHost(rabbitmqHost)
+                .setRelayHost(brokerHost)
                 .setRelayPort(61613)
-                .setClientLogin(rabbitmqUser)
-                .setClientPasscode(rabbitmqPass)
-                .setSystemLogin(rabbitmqUser)
-                .setSystemPasscode(rabbitmqPass)
+                .setClientLogin(brokerUser)
+                .setClientPasscode(brokerPass)
+                .setSystemLogin(brokerUser)
+                .setSystemPasscode(brokerPass)
                 .setVirtualHost("/");
         // registry.enableSimpleBroker("/topic");
         registry.setApplicationDestinationPrefixes("/app");
