@@ -47,7 +47,8 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
                 .setClientLogin(rabbitmqUser)
                 .setClientPasscode(rabbitmqPass)
                 .setSystemLogin(rabbitmqUser)
-                .setSystemPasscode(rabbitmqPass);
+                .setSystemPasscode(rabbitmqPass)
+                .setVirtualHost("/");
         //registry.enableSimpleBroker("/topic");
         registry.setApplicationDestinationPrefixes("/app");
     }
