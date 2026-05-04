@@ -30,7 +30,6 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         this.webSocketAuthInterceptor = webSocketAuthInterceptor;
     }
 
-
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/ws")
