@@ -126,4 +126,20 @@ public class LobbyRESTController {
         myLobbyDTO.setCurrentPlayers(lobby.getPlayers().size());
         return myLobbyDTO;
     }
+
+    @GetMapping("/game/{gameId}/leaderboard")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public GameResultDTO leaderboard(
+            @PathVariable("gameId") Long gameId,
+            @RequestHeader("token") String token,
+            @RequestHeader("userId") Long userId) {
+
+        AuthHeader authHeader = new AuthHeader(userId, token);
+        if (!authService.authUser(authHeader)) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Please log in");
+        }
+
+        return lobbyService.getGameResult(gameId);
+    }
 }

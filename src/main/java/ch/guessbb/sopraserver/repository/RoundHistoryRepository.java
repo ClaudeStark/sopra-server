@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface RoundHistoryRepository extends JpaRepository<RoundHistory, Long> {
     List<RoundHistory> findByUserUserId(Long userId);
+    List<RoundHistory> findByLobbyLobbyId(Long lobbyId);
 }

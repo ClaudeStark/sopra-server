@@ -4,10 +4,9 @@ import ch.guessbb.sopraserver.constant.*;
 import ch.guessbb.sopraserver.constant.LobbyState;
 import ch.guessbb.sopraserver.entity.*;
 import ch.guessbb.sopraserver.repository.LobbyRepository;
+import ch.guessbb.sopraserver.repository.RoundHistoryRepository;
 import ch.guessbb.sopraserver.repository.UserRepository;
-import ch.guessbb.sopraserver.rest.dto.CreateLobbyPostDTO;
-import ch.guessbb.sopraserver.rest.dto.LobbyAccessDTO;
-import ch.guessbb.sopraserver.rest.dto.MyLobbyDTO;
+import ch.guessbb.sopraserver.rest.dto.*;
 import ch.guessbb.sopraserver.rest.mapper.DTOMapper;
 import ch.guessbb.sopraserver.websocket.Message;
 import org.springframework.http.HttpStatus;
@@ -18,6 +17,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.security.SecureRandom;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -28,16 +28,18 @@ public class LobbyService {
     private final SimpMessagingTemplate messagingTemplate;
     private final UserRepository userRepository;
     private final LobbyRepository lobbyRepository;
+    private final RoundHistoryRepository roundHistoryRepository;
 
     private final String CHARS = "ABCDEFGHJKLMNPQRSTUVWXY1Z23456789";
     private final SecureRandom RANDOM = new SecureRandom();
 
-    public LobbyService(UserService userService, GameService gameService, SimpMessagingTemplate messagingTemplate, UserRepository userRepository, LobbyRepository lobbyRepository) {
+    public LobbyService(UserService userService, GameService gameService, SimpMessagingTemplate messagingTemplate, UserRepository userRepository, LobbyRepository lobbyRepository, RoundHistoryRepository roundHistoryRepository)  {
         this.userService = userService;
         this.gameService = gameService;
         this.messagingTemplate = messagingTemplate;
         this.userRepository = userRepository;
         this.lobbyRepository = lobbyRepository;
+        this.roundHistoryRepository = roundHistoryRepository;
     }
 
     public LobbyAccessDTO createLobby(CreateLobbyPostDTO createLobbyPostDTO, boolean isGuest, Long userId, String token) {
@@ -72,7 +74,9 @@ public class LobbyService {
     }
 
     public List<Lobby> getAllLobbies() {
-        return lobbyRepository.findAll();
+        return lobbyRepository.findAll().stream()
+                .filter(l -> l.getLobbyState() != LobbyState.FINISHED)
+                .collect(Collectors.toList());
     }
 
     public LobbyAccessDTO joinLobby(Long userId, String token, Long lobbyId, String lobbyCode, Boolean isGuest) {
@@ -214,5 +218,49 @@ public class LobbyService {
         myLobbyDTO.setCurrentPlayers(lobby.getPlayers().size());
         Message message = new Message(MessageType.LOBBY_STATE, myLobbyDTO);
         messagingTemplate.convertAndSend("/topic/lobby/" + lobby.getLobbyId(), message);
+    }
+
+    public GameResultDTO getGameResult(Long gameId) {
+        List<RoundHistory> roundHistories = roundHistoryRepository.findByLobbyLobbyId(gameId);
+
+        Map<Integer, RoundResultDTO> roundMap = new LinkedHashMap<>();
+        Map<Long, Integer> totalScores = new HashMap<>();
+        Map<Long, String> usernames = new HashMap<>();
+
+        for (RoundHistory rh : roundHistories) {
+            Long uid = rh.getUser().getUserId();
+            String username = rh.getUser().getUserProfile().getUsername();
+            usernames.put(uid, username);
+
+            totalScores.merge(uid, rh.getPoints(), Integer::sum);
+
+            RoundResultDTO roundDTO = roundMap.computeIfAbsent(rh.getRoundNumber(), n -> {
+                RoundResultDTO r = new RoundResultDTO();
+                r.setRoundNumber(n);
+                r.setScores(new HashMap<>());
+                r.setDistances(new HashMap<>());
+                return r;
+            });
+            roundDTO.getScores().put(uid, rh.getPoints());
+            roundDTO.getDistances().put(uid, (double) rh.getDistanceToTrain());
+        }
+
+        List<ScoreDTO> scores = totalScores.entrySet().stream()
+                .map(e -> {
+                    ScoreDTO s = new ScoreDTO();
+                    s.setUserId(e.getKey());
+                    s.setPoints(e.getValue());
+                    return s;
+                })
+                .sorted((a, b) -> b.getPoints() - a.getPoints())
+                .collect(Collectors.toList());
+
+        GameResultDTO result = new GameResultDTO();
+        result.setGameId(gameId);
+        result.setRounds(new ArrayList<>(roundMap.values()));
+        result.setScores(scores);
+        result.setUsernames(usernames);
+
+        return result;
     }
 }
