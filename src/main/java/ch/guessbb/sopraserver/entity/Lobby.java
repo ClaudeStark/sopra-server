@@ -39,6 +39,9 @@ public class Lobby {
     @Column(nullable = false)
     private Integer maxRounds;
 
+    @Column(nullable = false)
+    private Integer currentRound = 0;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 50)
     private LobbyState lobbyState;

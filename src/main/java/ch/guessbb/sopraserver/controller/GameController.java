@@ -37,7 +37,7 @@ public class GameController {
             @DestinationVariable Long gameId,
             @Header("userId") String userId,
             @Header("token") String token) {
-
+        System.out.println("readyForNextRound called for game " + gameId + " by user " + userId);
         Lobby currentLobby = lobbyService.getLobbyById(gameId);
         UserGameStatus userGameStatus = new UserGameStatus(Long.parseLong(userId), true);
         gameService.readyForNextRound(userGameStatus, currentLobby);
