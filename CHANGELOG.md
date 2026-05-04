@@ -1,3 +1,10 @@
+## [1.3.2](https://github.com/ClaudeStark/sopra-server/compare/v1.3.1...v1.3.2) (2026-05-04)
+
+
+### Bug Fixes
+
+* eager load lobby players to prevent lazy loading exception ([35fcf4c](https://github.com/ClaudeStark/sopra-server/commit/35fcf4c40f3bd7bf68e63ea01115b961fe2ee3a9))
+
 ## [1.3.1](https://github.com/ClaudeStark/sopra-server/compare/v1.3.0...v1.3.1) (2026-05-03)
 
 
