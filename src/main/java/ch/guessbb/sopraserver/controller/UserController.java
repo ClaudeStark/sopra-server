@@ -10,17 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-/**
- * HELÖOOOOOOOOOOOO
- */
-
-/**
- * User Controller
- * This class is responsible for handling all REST request that are related to
- * the user.
- * The controller will receive the request and delegate the execution to the
- * UserService and finally return the result.
- */
 
 @RestController
 public class UserController {
@@ -32,8 +21,6 @@ public class UserController {
 		this.userService = userService;
 		this.authService = authService;
 	}
-
-	// ENPOINTS
 
 	@PostMapping("/register")
 	@ResponseStatus(HttpStatus.CREATED)
@@ -56,6 +43,7 @@ public class UserController {
 		User user = userService.loginUser(
 				loginPostDTO.getUsername(),
 				loginPostDTO.getPassword());
+
 		return DTOMapper.INSTANCE.convertUsertoUserAuthDTO(user);
 	}
 
@@ -102,40 +90,3 @@ public class UserController {
     }
 }
 
-// @RestController
-// public class UserController {
-
-// private final UserService userService;
-
-// UserController(UserService userService) {
-// this.userService = userService;
-// }
-
-// @GetMapping("/users")
-// @ResponseStatus(HttpStatus.OK)
-// @ResponseBody
-// public List<UserGetDTO> getAllUsers() {
-// // fetch all users in the internal representation
-// List<User> users = userService.getUsers();
-// List<UserGetDTO> userGetDTOs = new ArrayList<>();
-
-// // convert each user to the API representation
-// for (User user : users) {
-// userGetDTOs.add(DTOMapper.INSTANCE.convertEntityToUserGetDTO(user));
-// }
-// return userGetDTOs;
-// }
-
-// @PostMapping("/users")
-// @ResponseStatus(HttpStatus.CREATED)
-// @ResponseBody
-// public UserGetDTO createUser(@RequestBody UserPostDTO userPostDTO) {
-// // convert API user to internal representation
-// User userInput = DTOMapper.INSTANCE.convertUserPostDTOtoEntity(userPostDTO);
-
-// // create user
-// User createdUser = userService.createUser(userInput);
-// // convert internal representation of user back to API
-// return DTOMapper.INSTANCE.convertEntityToUserGetDTO(createdUser);
-// }
-// }

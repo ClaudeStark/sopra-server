@@ -4,11 +4,9 @@ import ch.guessbb.sopraserver.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-@Repository("userRepository")
+@Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-	User findByUsername(String username);
-
-	User findByEmail(String email);
-
-	User findByToken(String token);
+    User findByUserProfileUsername(String username);
+    User findByUserProfileEmail(String email);
+    User findByToken(String token);
 }
